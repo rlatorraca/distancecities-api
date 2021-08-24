@@ -1,0 +1,59 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.0-M2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id("org.flywaydb.flyway") version "7.5.3"
+}
+
+
+group = 'ca.com.rlsp'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.3'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
+	implementation 'org.springframework.boot:spring-boot-devtools:2.5.3'
+	implementation 'com.vladmihalcea:hibernate-types-52:2.9.13'
+	implementation 'org.flywaydb:flyway-core:7.12.1'
+
+	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation 'org.postgresql:postgresql:42.2.23'
+
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation 'org.modelmapper:modelmapper:2.1.1'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+	implementation 'org.springframework.boot:spring-boot-devtools:2.5.4'
+
+
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+
+flyway {
+	url = 'jdbc:postgresql://localhost:5433/canadiancities?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&serverTimeZone=UTC'
+	user = 'root'
+	password = 'root'
+	locations = ['classpath:db/migration', 'classpath:db/testdata' ]
+}
